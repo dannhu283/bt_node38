@@ -1,0 +1,255 @@
+
+--table users
+CREATE TABLE users(
+	user_id int PRIMARY key auto_increment,
+	full_name VARCHAR (100) not null,
+	email VARCHAR(150) not null,
+	pass_word VARCHAR(100) not null
+)
+
+--data users
+INSERT INTO users (full_name, email, pass_word) VALUES
+('John Doe', 'john.doe@example.com', 'password123'),
+('Jane Smith', 'jane.smith@example.com', 'securepass456'),
+('Bob Johnson', 'bob.johnson@example.com', 'myp@ssw0rd'),
+('Alice Williams', 'alice.williams@example.com', 'pass123word'),
+('Charlie Brown', 'charlie.brown@example.com', 'brownie987'),
+('Eva Davis', 'eva.davis@example.com', 'evapassword'),
+('Frank Miller', 'frank.miller@example.com', 'frank123'),
+('Grace Turner', 'grace.turner@example.com', 'turnerpass'),
+('Henry White', 'henry.white@example.com', 'henry456'),
+('Isabel Lee', 'isabel.lee@example.com', 'isapass789');
+
+SELECT * from users;
+
+--table restaurant
+ CREATE TABLE restaurants(
+ 	res_id int PRIMARY key auto_increment,
+ 	res_name VARCHAR(100),
+ 	image VARCHAR(255),
+ 	decs VARCHAR(255)
+ )
+ 
+ --data restaurant
+ INSERT INTO restaurants (res_name, image, decs) VALUES
+('The Taste Haven', 'taste_haven.jpg', 'A culinary journey with exquisite flavors'),
+('Bella Italia', 'bella_italia.png', 'Authentic Italian cuisine in a cozy atmosphere'),
+('Spice Junction', 'spice_junction.jpg', 'Bold and vibrant flavors from around the world'),
+('Sushi Delight', 'sushi_delight.png', 'Fresh and delightful sushi creations'),
+('Grill Master', 'grill_master.jpg', 'Sizzling barbecue and grilled specialties'),
+('Mediterranean Breeze', 'mediterranean_breeze.png', 'Savor the taste of the Mediterranean'),
+('Thai Orchid', 'thai_orchid.jpg', 'Experience the essence of Thai cuisine'),
+('Gourmet Fusion', 'gourmet_fusion.png', 'A fusion of flavors for the discerning palate'),
+('Seafood Harbor', 'seafood_harbor.jpg', 'Delight in the bounty of the sea'),
+('Green Garden', 'green_garden.png', 'Fresh and healthy vegetarian delights');
+
+SELECT * from restaurants;
+
+--table trung gian user và restaurant
+CREATE TABLE like_res(
+	user_id INT,
+	FOREIGN KEY(user_id) REFERENCES users(user_id),
+	
+	res_id INT,
+	FOREIGN KEY(res_id) REFERENCES restaurants(res_id),
+	
+	date_like DATE
+)
+
+--data like_res
+INSERT INTO like_res (user_id, res_id, date_like) VALUES
+(1, 1, '2023-01-01'),
+(2, 3, '2023-01-02'),
+(3, 5, '2023-01-03'),
+(4, 2, '2023-01-04'),
+(5, 7, '2023-01-05'),
+(1, 4, '2023-01-06'),
+(2, 6, '2023-01-07'),
+(3, 9, '2023-01-08'),
+(4, 8, '2023-01-09'),
+(5, 10, '2023-01-10');
+
+SELECT * from like_res;
+
+--table trung gian rate_res
+CREATE table rate_res(
+	user_id int,
+	FOREIGN KEY(user_id) REFERENCES users(user_id),
+	
+	res_id int,
+	FOREIGN KEY(res_id) REFERENCES restaurants(res_id),
+	
+	amount int,
+	date_rate date
+)
+
+--data rate_res
+INSERT INTO rate_res (user_id, res_id, amount, date_rate) VALUES
+(1, 1, 4, '2023-01-01'),
+(2, 3, 5, '2023-01-02'),
+(3, 5, 3, '2023-01-03'),
+(4, 2, 4, '2023-01-04'),
+(5, 7, 5, '2023-01-05'),
+(1, 4, 4, '2023-01-06'),
+(2, 6, 3, '2023-01-07'),
+(3, 9, 5, '2023-01-08'),
+(4, 8, 4, '2023-01-09'),
+(5, 10, 3, '2023-01-10');
+
+SELECT * from rate_res;
+
+--table food_type
+CREATE TABLE food_type(
+	type_id int PRIMARY key auto_increment,
+	type_name VARCHAR(200)
+)
+
+--data food_type
+INSERT INTO food_type (type_name) VALUES
+('Italian'),
+('Japanese'),
+('Mexican'),
+('Chinese'),
+('Indian'),
+('Mediterranean'),
+('American'),
+('Thai'),
+('Vegetarian'),
+('Vegan');
+
+SELECT * from food_type;
+
+
+--table foods
+CREATE TABLE foods(
+	food_id INT PRIMARY key auto_increment,
+	food_name VARCHAR(150) not null,
+	image VARCHAR(100),
+	price FLOAT not null,
+	descr VARCHAR(255),
+	type_id int,
+	FOREIGN key (type_id) REFERENCES food_type(type_id)
+)
+
+--data foods
+INSERT INTO foods (food_name, image, price, descr, type_id) VALUES
+('Margherita Pizza', 'margherita_pizza.jpg', 12.99, 'Classic pizza with tomato and mozzarella', 1),
+('Sushi Roll', 'sushi_roll.png', 18.99, 'Assorted sushi rolls with fresh ingredients', 2),
+('Tacos', 'tacos.jpg', 9.99, 'Authentic Mexican tacos with choice of filling', 3),
+('General Tso Chicken', 'general_tso_chicken.jpg', 14.99, 'Spicy and sweet Chinese chicken dish', 4),
+('Butter Chicken', 'butter_chicken.jpg', 16.99, 'Creamy and flavorful Indian chicken curry', 5),
+('Greek Salad', 'greek_salad.png', 8.99, 'Healthy salad with Mediterranean flavors', 6),
+('Hamburger', 'hamburger.jpg', 11.99, 'Classic American burger with cheese and toppings', 7),
+('Pad Thai', 'pad_thai.jpg', 13.99, 'Popular Thai stir-fried noodle dish', 8),
+('Vegetarian Pasta', 'vegetarian_pasta.jpg', 10.99, 'Pasta dish with assorted vegetables', 9),
+('Vegan Buddha Bowl', 'vegan_buddha_bowl.png', 15.99, 'Nutrient-packed vegan bowl with grains and veggies', 10),
+('Classic Spaghetti Bolognese', 'spaghetti_bolognese.jpg', 14.99, 'Traditional Italian pasta with meat sauce', 1),
+('Salmon Sashimi', 'salmon_sashimi.png', 22.99, 'Fresh slices of raw salmon served with wasabi and soy sauce', 2);
+
+SELECT * from foods;
+
+--table orders
+CREATE TABLE orders(
+	user_id int,
+	FOREIGN key (user_id) REFERENCES users(user_id),
+	
+	food_id int,
+	FOREIGN key(food_id) REFERENCES foods(food_id),
+	amount int not null,
+	code VARCHAR(100),
+	arr_sub_id VARCHAR(150)
+)
+
+--data orders 
+INSERT INTO orders (user_id, food_id, amount, code, arr_sub_id) VALUES
+(1, 32, 2, 'ABC123', 'XYZ789'),
+(2, 32, 1, 'DEF456', 'LMN012'),
+(3, 33, 3, 'GHI789', 'OPQ345'),
+(1, 34, 2, 'JKL012', 'RST678'),
+(2, 25, 1, 'MNO345', 'UVW901'),
+(3, 31, 3, 'PQR678', 'YZA234'),
+(1, 24, 2, 'STU901', 'BCD567'),
+(2, 27, 1, 'VWX234', 'EFG890'),
+(3, 29, 3, 'YZA567', 'HIJ123'),
+(1, 30, 2, 'BCD890', 'KLM456');
+
+SELECT * from orders;
+
+--table sub_food
+CREATE TABLE sub_food(
+    sub_id INT PRIMARY KEY AUTO_INCREMENT,
+    sub_name VARCHAR(100),
+    sub_price FLOAT,
+    food_id INT,
+    FOREIGN KEY (food_id) REFERENCES foods(food_id)
+);
+
+--data sub_food
+INSERT INTO sub_food (sub_name, sub_price, food_id) VALUES
+('Extra Cheese', 2.50, 1),
+('Spicy Mayo', 1.00, 2),
+('Guacamole', 1.50, 3),
+('Egg Roll', 3.00, 4),
+('Naan Bread', 2.50, 5),
+('Feta Cheese', 1.00, 6),
+('Bacon', 2.00, 7),
+('Peanut Sauce', 1.50, 8),
+('Alfredo Sauce', 2.50, 9),
+('Avocado', 1.50, 10);
+
+SELECT * from sub_food;
+
+--câu 1: 5 người like nhà hàng nhiều nhất
+SELECT COUNT(like_res.user_id) as 'number_of_likes', users.full_name
+FROM like_res
+INNER JOIN users 
+ON like_res.user_id = users.user_id
+GROUP BY users.user_id, users.full_name
+ORDER BY number_of_likes DESC
+LIMIT 5;
+
+-- câu 2: 2 nhà hàng có lượt like nhiều nhất 
+SELECT restaurants.res_id, restaurants.res_name, COUNT(like_res.user_id) AS total_likes
+FROM restaurants 
+JOIN like_res ON restaurants.res_id = like_res.res_id
+GROUP BY restaurants.res_id, restaurants.res_name
+ORDER BY total_likes DESC
+LIMIT 2;
+
+-- câu 3 tìm người đã đặt hàng nhiều nhất
+SELECT orders.user_id, users.full_name, COUNT(orders.user_id) AS total_orders
+FROM orders 
+JOIN users ON orders.user_id = users.user_id
+GROUP BY orders.user_id, users.full_name
+ORDER BY total_orders DESC
+LIMIT 1;
+
+--câu 4 tìm người dùng không hoạt động trong hệ thống(không like,không đặt hàng,không đánh giá nhà hàng)
+SELECT users.user_id, users.full_name
+FROM users 
+LEFT JOIN like_res  ON users.user_id = like_res.user_id
+LEFT JOIN orders ON users.user_id = orders.user_id
+LEFT JOIN rate_res ON users.user_id = rate_res.user_id
+WHERE like_res.user_id IS NULL && orders.user_id IS NULL && rate_res.user_id IS NULL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
